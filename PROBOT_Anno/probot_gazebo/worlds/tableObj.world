@@ -41,9 +41,9 @@
                     <radius>0.0075</radius>
                     <length>.05</length>
                 </cylinder-->
-                <!--box>
+                <!-- <box>
                     <size>0.015 0.015 0.05</size>
-                </box-->
+                </box> -->
                 <mesh>
                     <uri>model://coke_can/meshes/coke_can.dae</uri>
                     <scale>0.2 0.15 0.18</scale>
@@ -69,13 +69,13 @@
         </collision>
         <visual name='visual'>
             <geometry>
-                <!--cylinder>
+                <!-- cylinder>
                     <radius>0.0075</radius>
                     <length>.05</length>
-                </cylinder-->
-                <!--box>
+                </cylinder -->
+                <!-- <box>
                     <size>0.015 0.015 0.05</size>
-                </box-->
+                </box> -->
                 <mesh>
                     <uri>model://coke_can/meshes/coke_can.dae</uri>
                     <scale>0.2 0.15 0.18</scale>
@@ -151,4 +151,3 @@
  
   </world>
 </sdf>
-

@@ -1,21 +1,21 @@
-cmake_minimum_required(VERSION 3.0.2)
-project(img_anno)
+cmake_minimum_required(VERSION 2.8.3)
+project(probot_anno_demo)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  cv_bridge
-  image_transport
+  moveit_core
+  moveit_ros_perception
+  moveit_ros_planning_interface
+  probot_msgs
+  trajectory_msgs
   roscpp
+  rospy
 )
-
-
-find_package(OpenCV REQUIRED)
-set(OpenCV_DIR /usr/local/share/OpenCV)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -74,7 +74,7 @@ set(OpenCV_DIR /usr/local/share/OpenCV)
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
+#   probot_msgs
 # )
 
 ################################################
@@ -107,9 +107,9 @@ set(OpenCV_DIR /usr/local/share/OpenCV)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS $(OpenCV_DIR)
-#  LIBRARIES img_anno
-#  CATKIN_DEPENDS cv_bridge image_transport roscpp
+#  INCLUDE_DIRS include
+#  LIBRARIES probot_anno_demo
+   CATKIN_DEPENDS moveit_core moveit_ros_planning_interface probot_msgs roscpp rospy
 #  DEPENDS system_lib
 )
 
@@ -122,12 +122,11 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
-  ${OpenCV_DIR}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/img_anno.cpp
+#   src/${PROJECT_NAME}/probot_anno_demo.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -138,7 +137,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(img_loader src/load.cpp)
+# add_executable(${PROJECT_NAME}_node src/probot_anno_demo_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,12 +150,37 @@ add_executable(img_loader src/load.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(img_loader
-  ${catkin_LIBRARIES}
-)
-target_link_libraries(img_loader
-  ${OpenCV_LIBS}
-)
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
+
+add_executable(anno_fk_demo src/moveit_fk_demo.cpp)
+target_link_libraries(anno_fk_demo ${catkin_LIBRARIES})
+
+add_executable(anno_ik_demo src/moveit_ik_demo.cpp)
+target_link_libraries(anno_ik_demo ${catkin_LIBRARIES})
+
+add_executable(anno_cartesian_demo src/moveit_cartesian_demo.cpp)
+target_link_libraries(anno_cartesian_demo ${catkin_LIBRARIES})
+
+add_executable(anno_collision_demo src/moveit_collision_demo.cpp)
+target_link_libraries(anno_collision_demo ${catkin_LIBRARIES})
+
+add_executable(anno_circle_demo src/moveit_circle_demo.cpp)
+target_link_libraries(anno_circle_demo ${catkin_LIBRARIES})
+
+add_executable(anno_revise_trajectory_demo src/moveit_revise_trajectory_demo.cpp)
+target_link_libraries(anno_revise_trajectory_demo ${catkin_LIBRARIES})
+
+add_executable(anno_continue_trajectory_demo src/moveit_continue_trajectory_demo.cpp)
+target_link_libraries(anno_continue_trajectory_demo ${catkin_LIBRARIES})
+
+add_executable(ffuck_demo src/ffuck_demo.cpp)
+target_link_libraries(ffuck_demo ${catkin_LIBRARIES})
+
+add_executable(anno_sync_demo src/probot_sync_demo.cpp)
+add_dependencies(anno_sync_demo probot_msgs_generate_messages_cpp) 
+target_link_libraries(anno_sync_demo ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -167,7 +191,7 @@ target_link_libraries(img_loader
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# catkin_install_python(PROGRAMS
+# install(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
@@ -205,7 +229,7 @@ target_link_libraries(img_loader
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_img_anno.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_probot_anno_demo.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

@@ -30,9 +30,12 @@ limitations under the License.
 
 #include "probot_grasping/vision_manager.h"
 
+cv::Mat img;
+void* showImage(void *);
+
 class GraspingDemo
 {
-  private:
+private:
 	/**
  	 * @brief NodeHandle of the current node
  	 */
@@ -65,6 +68,8 @@ class GraspingDemo
 	/**
      * @brief cv_ptr is the pointer to image as received by it_
      */
+
+	int read_image_time;
 
 	cv_bridge::CvImagePtr cv_ptr;
 	/**
@@ -124,7 +129,7 @@ class GraspingDemo
 	 */
 	void lift();
 
-  public:
+public:
 	/**
  	 * @brief      GraspingDemo behaviour Constructor
  	 *
@@ -151,5 +156,4 @@ class GraspingDemo
 	 */
 	void goHome();
 };
-
 #endif
