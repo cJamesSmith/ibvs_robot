@@ -169,6 +169,11 @@ target_link_libraries(visonManager ${OpenCV_LIBS})
 
 add_executable(graspingDemo src/grasping_demo.cpp)
 target_link_libraries(graspingDemo visonManager ${catkin_LIBRARIES})
+add_executable(mission_2 src/mission_2.cpp)
+target_link_libraries(mission_2 ${catkin_LIBRARIES})
+add_executable(display_img src/display_img.cpp)
+target_link_libraries(display_img ${catkin_LIBRARIES})
+target_link_libraries(display_img ${OpenCV_LIBS})
 
 #############
 ## Install ##
