@@ -1,2 +1,0 @@
-probot_anno/probot_anno_ikfast_manipulator_plugin:probot_anno/probot_anno_moveit_config:probot_anno/probot_description:probot_anno/probot_gazebo:probot_anno/probot_msgs
--DCATKIN_DEVEL_PREFIX=/home/cxw/robotic_ws/devel -DCMAKE_INSTALL_PREFIX=/home/cxw/robotic_ws/install -G Unix Makefiles

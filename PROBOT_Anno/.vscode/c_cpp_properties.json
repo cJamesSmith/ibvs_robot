@@ -6,13 +6,10 @@
                 "limitSymbolsToIncludedHeaders": true
             },
             "includePath": [
-                "/home/cxw/anno_ws/devel/include/**",
-                "/home/cxw/catkin_ws/devel/include/**",
+                "/home/ch/probot_anno_ws/devel/include/**",
                 "/opt/ros/kinetic/include/**",
-                "/home/cxw/catkin_ws/src/dancer_robot/dancer-motion/include/**",
-                "/home/cxw/catkin_ws/src/PROBOT_Anno/img_anno/include/**",
-                "/home/cxw/anno_ws/src/PROBOT_Anno/probot_anno_ikfast_manipulator_plugin/include/**",
-                "/home/cxw/anno_ws/src/PROBOT_Anno/probot_grasping/include/**",
+                "/home/ch/probot_anno_ws/src/PROBOT_Anno/probot_anno_ikfast_manipulator_plugin/include/**",
+                "/home/ch/probot_anno_ws/src/PROBOT_Anno/probot_grasping/include/**",
                 "/usr/include/**"
             ],
             "name": "ROS",

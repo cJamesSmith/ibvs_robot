@@ -1,8 +1,0 @@
-prefix=/home/cxw/robotic_ws/devel
-
-Name: probot_msgs
-Description: Description of probot_msgs
-Version: 0.0.0
-Cflags: -I/home/cxw/robotic_ws/devel/include
-Libs: -L${prefix}/lib 
-Requires: geometry_msgs std_msgs message_runtime genmsg
