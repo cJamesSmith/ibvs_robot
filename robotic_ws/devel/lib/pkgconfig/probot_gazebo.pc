@@ -1,0 +1,8 @@
+prefix=/home/cxw/robotic_ws/devel
+
+Name: probot_gazebo
+Description: Description of probot_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy moveit_core moveit_ros_planning_interface probot_msgs probot_anno_ikfast_manipulator_plugin std_msgs message_runtime
