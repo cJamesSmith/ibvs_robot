@@ -11,10 +11,8 @@
 #include "controller_manager_msgs/ListControllers.h"
 #include "jacobi.hpp"
 
-
 ros::Time t;
 double begin;
-
 
 class SubscribeAndPublish
 {
@@ -26,10 +24,17 @@ public:
             init_pos.data.push_back(0);
         }
         pub_ = n_.advertise<std_msgs::Float64MultiArray>("/probot_anno/arm_vel_controller/command", 100);
-        sub_ = n_.subscribe("/gazebo/link_states", 100, &SubscribeAndPublish::poseCallBack, this);
+        sub_status = n_.subscribe("/gazebo/link_states", 100, &SubscribeAndPublish::poseCallBack, this);
+        sub_cmdvel = n_.subscribe("/cmdvel", 100, &SubscribeAndPublish::cmdvelCallback, this);
     }
 
-    void calLinkVel(double dur=0, double vx=0, double vy=0, double vz=0, double wx=0, double wy=0, double wz=0)
+    void cmdvelCallback(const std_msgs::Float64MultiArray &msg)
+    {
+        this->cmdx = msg.data[0];
+        this->cmdy = msg.data[1];
+        this->cmdz = msg.data[2];
+    }
+    void calLinkVel(double dur = 0, double vx = 0, double vy = 0, double vz = 0, double wx = 0, double wy = 0, double wz = 0)
     {
         ros::Time now = ros::Time::now();
         double duration = (now.toSec() - t.toSec()) - begin;
@@ -37,7 +42,7 @@ public:
         if (duration <= 5)
         {
             // vel << vx, vy, vz, wx, wy, wz;
-            vel << 0.05, 0.0, 0.0, 0.0, 0.0, 0.0;
+            vel << this->cmdx, this->cmdy, this->cmdz, 0.0, 0.0, 0.0;
             std::cout << ros::Time().now() << std::endl;
         }
 
@@ -71,11 +76,13 @@ public:
 private:
     ros::NodeHandle n_;
     ros::Publisher pub_;
-    ros::Subscriber sub_;
+    ros::Subscriber sub_status;
+    ros::Subscriber sub_cmdvel;
     Eigen::Matrix<double, 6, 6> jacobi;
     Eigen::Matrix<double, 6, 1> thetaVel;
     geometry_msgs::Point pos[6];
     double currentVel = 0;
+    double cmdx, cmdy, cmdz;
     std_msgs::Float64MultiArray init_pos;
 };
 
