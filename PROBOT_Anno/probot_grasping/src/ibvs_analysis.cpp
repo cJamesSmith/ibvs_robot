@@ -1,3 +1,4 @@
+#include <opencv2/opencv.hpp>
 #include <visp3/gui/vpDisplayGDI.h>
 #include <visp3/gui/vpDisplayOpenCV.h>
 #include <visp3/gui/vpDisplayX.h>
@@ -6,6 +7,7 @@
 #include <visp3/visual_features/vpFeatureBuilder.h>
 #include <visp3/vs/vpServo.h>
 #include <visp3/vs/vpServoDisplay.h>
+#include <cv_bridge/cv_bridge.h>
 #include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include "std_msgs/Float64MultiArray.h"
@@ -15,6 +17,9 @@ vpColVector v;
 
 void myCallback(const sensor_msgs::ImageConstPtr &img)
 {
+    cv::Mat display_img = cv_bridge::toCvShare(img, "bgr8")->image;
+    // cv::imshow("display_img", display_img);
+    // cv::waitKey(8);
 }
 
 void display_trajectory(const vpImage<unsigned char> &I, std::vector<vpPoint> &point, const vpHomogeneousMatrix &cMo,
@@ -41,10 +46,10 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ibvs_analysis");
     ros::NodeHandle n;
-    ros::Subscriber my_subscriber = n.subscribe("/probot_anno/camera/image_raw", 1, myCallback);
-    ros::Publisher my_publisher = n.advertise<std_msgs::Float64MultiArray>("/cmdvel", 100);
+    ros::Subscriber my_subscriber = n.subscribe("/probot_anno/camera/image_raw", 100, myCallback);
+    ros::Publisher my_publisher = n.advertise<std_msgs::Float64MultiArray>("/cmd_vel", 100);
     std_msgs::Float64MultiArray msg;
-    for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 6; i++)
     {
         msg.data.push_back(0);
     }
@@ -95,7 +100,7 @@ int main(int argc, char **argv)
         }
         v = task.computeControlLaw();
         robot.setVelocity(vpRobot::CAMERA_FRAME, v);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 6; i++)
         {
             msg.data.at(i) = v.data[i];
         }
