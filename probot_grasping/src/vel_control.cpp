@@ -37,7 +37,7 @@ public:
         this->cmdwy = msg.data[4];
         this->cmdwz = msg.data[5];
     }
-    void calLinkVel(double dur = 0, double vx = 0, double vy = 0, double vz = 0, double wx = 0, double wy = 0, double wz = 0)
+    void calLinkVel()
     {
         ros::Time now = ros::Time::now();
         double duration = (now.toSec() - t.toSec()) - begin;

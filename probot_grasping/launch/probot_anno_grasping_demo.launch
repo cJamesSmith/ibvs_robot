@@ -11,5 +11,6 @@
         <param name="pregrasp_z"            value="0.28"/>
     </node> -->
 
+    <!-- <node pkg="probot_grasping" name="display_img" type="display_img" output="screen"/> -->
 
 </launch>

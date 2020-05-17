@@ -13,7 +13,6 @@
 #include "std_msgs/Float64MultiArray.h"
 #include <math.h>
 #include <tf/transform_listener.h>
-#include "squares.hpp"
 
 using namespace std;
 using namespace cv;
@@ -185,13 +184,13 @@ void myCallback(const std_msgs::Float64MultiArray &msg)
     // cout << "--------------------------------" << filtered_corners.size() << endl;
     // imshow("final", image_color);
 
-    for (int i = 0; i < 2 * NUM; i += 2)
-    {
-        ppp[i/2].set_x(msg.data[i]);
-        ppp[i/2].set_y(msg.data[i + 1]);
-        ppp[i/2].set_Z(0);
-        // std::cout << "123" << std::endl;
-    }
+    // for (int i = 0; i < 2 * NUM; i += 2)
+    // {
+    //     ppp[i/2].set_x(msg.data[i]);
+    //     ppp[i/2].set_y(msg.data[i + 1]);
+    //     ppp[i/2].set_Z(0);
+    //     // std::cout << "123" << std::endl;
+    // }
     // cv::waitKey(8);
 }
 
@@ -210,7 +209,7 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "ibvs_analysis");
     ros::NodeHandle n;
-    ros::Subscriber my_subscriber = n.subscribe("/display_img", 10, myCallback);
+    // ros::Subscriber my_subscriber = n.subscribe("/display_img", 10, myCallback);
     ros::Publisher my_publisher = n.advertise<std_msgs::Float64MultiArray>("/cmd_vel", 100);
     std_msgs::Float64MultiArray msg;
     for (int i = 0; i < 6; i++)
@@ -245,7 +244,6 @@ int main(int argc, char **argv)
     vpImage<unsigned char> Iext(480, 640, 255);
     vpDisplayX displayInt(Iint, 0, 0, "Internal view");
     vpCameraParameters cam(800, 800, 400, 400);
-    ros::WallDuration(2).sleep();
     while (ros::ok())
     {
         ros::spinOnce();
