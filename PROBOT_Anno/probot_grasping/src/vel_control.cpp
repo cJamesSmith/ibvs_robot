@@ -25,29 +25,33 @@ public:
         }
         pub_ = n_.advertise<std_msgs::Float64MultiArray>("/probot_anno/arm_vel_controller/command", 100);
         sub_status = n_.subscribe("/gazebo/link_states", 100, &SubscribeAndPublish::poseCallBack, this);
-        sub_cmdvel = n_.subscribe("/cmdvel", 100, &SubscribeAndPublish::cmdvelCallback, this);
+        sub_cmdvel = n_.subscribe("/cmd_vel", 100, &SubscribeAndPublish::cmdvelCallback, this);
     }
 
     void cmdvelCallback(const std_msgs::Float64MultiArray &msg)
     {
-        this->cmdx = msg.data[0];
-        this->cmdy = msg.data[1];
-        this->cmdz = msg.data[2];
+        this->cmdvx = msg.data[0];
+        this->cmdvy = msg.data[1];
+        this->cmdvz = msg.data[2];
+        this->cmdwx = msg.data[3];
+        this->cmdwy = msg.data[4];
+        this->cmdwz = msg.data[5];
     }
     void calLinkVel(double dur = 0, double vx = 0, double vy = 0, double vz = 0, double wx = 0, double wy = 0, double wz = 0)
     {
         ros::Time now = ros::Time::now();
         double duration = (now.toSec() - t.toSec()) - begin;
         Eigen::Matrix<double, 6, 1> vel;
-        if (duration <= 5)
-        {
+        // if (duration <= 5)
+        // {
             // vel << vx, vy, vz, wx, wy, wz;
-            vel << this->cmdx, this->cmdy, this->cmdz, 0.0, 0.0, 0.0;
+            vel << this->cmdvx, this->cmdvy, this->cmdvz, this->cmdwx, this->cmdwy, this->cmdwz;
+            // vel << 0.005, 0.0, 0.0, 0.0, 0.0, 0.0;
             std::cout << ros::Time().now() << std::endl;
-        }
+        // }
 
-        else
-            vel << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+        // else
+            // vel << 0.0, 0.0, 0.0, 0.0, 0.0, 0.0;
         thetaVel = jacobi.inverse() * vel;
     }
 
@@ -82,7 +86,7 @@ private:
     Eigen::Matrix<double, 6, 1> thetaVel;
     geometry_msgs::Point pos[6];
     double currentVel = 0;
-    double cmdx, cmdy, cmdz;
+    double cmdvx, cmdvy, cmdvz, cmdwx, cmdwy, cmdwz;
     std_msgs::Float64MultiArray init_pos;
 };
 
