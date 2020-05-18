@@ -84,8 +84,8 @@ void VisionManager::detectTable(cv::Rect &tablePos)
     tablePos = bbox;
 
 	// Test the conversion values
-	std::cout << "Pixels in y" << pixels_permm_y << std::endl;
-	std::cout << "Pixels in x" << pixels_permm_x << std::endl;
+	// std::cout << "Pixels in y" << pixels_permm_y << std::endl;
+	// std::cout << "Pixels in x" << pixels_permm_x << std::endl;
 
 	// Draw Contours - For Debugging
 	std::vector<std::vector<cv::Point>> contours;
@@ -153,8 +153,8 @@ void VisionManager::detect2DObject(float &pixel_x, float &pixel_y, cv::Rect &tab
 	pixel_y = bbox.y + bbox.height / 2;
 
 	// Test the conversion values
-	std::cout << "pixel_x" << pixel_x << std::endl;
-	std::cout << "pixel_y" << pixel_y << std::endl;
+	// std::cout << "pixel_x" << pixel_x << std::endl;
+	// std::cout << "pixel_y" << pixel_y << std::endl;
 
 	// For Drawing
 	pt.x = bbox.x + bbox.width / 2;

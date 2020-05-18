@@ -80,8 +80,8 @@ void GraspingDemo::imageCb(const sensor_msgs::ImageConstPtr &msg)
     vMng_.get2DLocation(cv_ptr->image, obj_x, obj_y);
 
     // Temporary Debugging
-    std::cout<< " X-Co-ordinate in Camera Frame :" << obj_x << std::endl;
-    std::cout<< " Y-Co-ordinate in Camera Frame :" << obj_y << std::endl;
+    // std::cout<< " X-Co-ordinate in Camera Frame :" << obj_x << std::endl;
+    // std::cout<< " Y-Co-ordinate in Camera Frame :" << obj_y << std::endl;
 
     obj_camera_frame.setZ(-obj_y);
     obj_camera_frame.setY(-obj_x);
@@ -91,9 +91,9 @@ void GraspingDemo::imageCb(const sensor_msgs::ImageConstPtr &msg)
     grasp_running = true;
 
     // Temporary Debugging
-    std::cout<< " X-Co-ordinate in Robot Frame :" << obj_robot_frame.getX() << std::endl;
-    std::cout<< " Y-Co-ordinate in Robot Frame :" << obj_robot_frame.getY() << std::endl;
-    std::cout<< " Z-Co-ordinate in Robot Frame :" << obj_robot_frame.getZ() << std::endl;
+    // std::cout<< " X-Co-ordinate in Robot Frame :" << obj_robot_frame.getX() << std::endl;
+    // std::cout<< " Y-Co-ordinate in Robot Frame :" << obj_robot_frame.getY() << std::endl;
+    // std::cout<< " Z-Co-ordinate in Robot Frame :" << obj_robot_frame.getZ() << std::endl;
   }
 }
 

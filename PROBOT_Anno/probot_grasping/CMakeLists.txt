@@ -23,7 +23,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(OpenCV REQUIRED)
-
+find_package(VISP REQUIRED)
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
@@ -125,6 +125,7 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  ${VISP_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -169,14 +170,23 @@ target_link_libraries(visonManager ${OpenCV_LIBS})
 
 add_executable(graspingDemo src/grasping_demo.cpp)
 target_link_libraries(graspingDemo visonManager ${catkin_LIBRARIES})
-add_executable(vel_control src/vel_control.cpp)
-target_link_libraries(vel_control ${catkin_LIBRARIES})
-add_executable(testvel src/testvel.cpp)
-target_link_libraries(testvel ${catkin_LIBRARIES})
+# add_executable(mission_2 src/mission_2.cpp)
+# target_link_libraries(mission_2 ${catkin_LIBRARIES})
 add_executable(display_img src/display_img.cpp)
 target_link_libraries(display_img ${catkin_LIBRARIES})
 target_link_libraries(display_img ${OpenCV_LIBS})
-
+add_executable(vel_control src/vel_control.cpp)
+target_link_libraries(vel_control ${catkin_LIBRARIES})
+target_link_libraries(vel_control ${OpenCV_LIBS})
+add_executable(ibvs_analysis src/ibvs_analysis.cpp)
+target_link_libraries(ibvs_analysis ${catkin_LIBRARIES})
+target_link_libraries(ibvs_analysis ${OpenCV_LIBS})
+target_link_libraries(ibvs_analysis ${VISP_LIBRARIES})
+add_executable(testvel src/testvel.cpp)
+target_link_libraries(testvel ${catkin_LIBRARIES})
+# find_package( OpenCV REQUIRED )
+# add_executable( squares squares.cpp )
+# target_link_libraries( squares ${OpenCV_LIBS} )
 #############
 ## Install ##
 #############
